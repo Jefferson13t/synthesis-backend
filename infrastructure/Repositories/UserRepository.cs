@@ -11,15 +11,23 @@ namespace  Synthesis.Repository
         public UserRepository(){
             IMongoDatabase database = ConnectionContext.ConnectionToMongo();
             _userCollection = database.GetCollection<User>("users");
+
         }
         public void Add(User user){
-            _userCollection.InsertOne(user);
+            _userCollection.InsertOne(user);  
         }
         public List<UserDTO> Get() {
             FilterDefinition<User> filter = Builders<User>.Filter.Empty;
             var projection = Builders<User>.Projection.Include("id").Include("name").Include("photo");
             List<UserDTO> result = _userCollection.Find(filter).Project<UserDTO>(projection).ToList();
             return result;
+        }
+        public User Get(string email){
+            User userFound = _userCollection.Find(x => x.Email == email).FirstOrDefault();
+            if(userFound == null){
+                throw new ArgumentException("Usuario não encontrado.");
+            }
+            return userFound;
         }
     }
 }

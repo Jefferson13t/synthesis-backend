@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Synthesis.Model;
+using Microsoft.AspNetCore.Authorization;
 using Synthesis.ViewModel;
 using Synthesis.Services;
 
@@ -11,10 +12,15 @@ namespace Synthesis.Controllers{
         public UserController(UserServices userServices) {
             _userServices = userServices;
         }
+
         [HttpPost]
         public IActionResult Add(UserViewModel userView){
-            User newUser = _userServices.CreateUser(userView.Name, userView.Email, userView.Password);
-            return Ok(newUser);
+            try{
+                User newUser = _userServices.CreateUser(userView.Name, userView.Email, userView.Password);
+                return Ok(newUser);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

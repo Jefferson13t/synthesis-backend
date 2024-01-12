@@ -4,6 +4,6 @@ namespace Synthesis.Model
 
 {
     public interface IUserServices {
-        public User CreateUser(string Name, string Email, string Password);
+        User CreateUser(string Name, string Email, string Password);
     }
 }
