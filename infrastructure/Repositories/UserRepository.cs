@@ -18,7 +18,7 @@ namespace  Synthesis.Repository
         }
         public List<UserDTO> Get() {
             FilterDefinition<User> filter = Builders<User>.Filter.Empty;
-            var projection = Builders<User>.Projection.Include("id").Include("name").Include("photo");
+            var projection = Builders<User>.Projection.Include("id").Include("name").Include("email");
             List<UserDTO> result = _userCollection.Find(filter).Project<UserDTO>(projection).ToList();
             return result;
         }

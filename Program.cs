@@ -1,4 +1,3 @@
-using Synthesis;
 using Synthesis.Repository;
 using Synthesis.Services;
 using Microsoft.AspNetCore.Builder;
@@ -18,39 +17,9 @@ ConventionRegistry.Register("elementNameConvention", pack, x => true);
 
 DotNetEnv.Env.Load();
 
-builder.Services.AddScoped<UserServices>();
-builder.Services.AddScoped<AuthServices>();
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddTransient<IUserServices, UserServices>();
-builder.Services.AddTransient<IAuthServices, AuthServices>();
-builder.Services.AddTransient<IUserRepository, UserRepository>();
-
-var key = Encoding.ASCII.GetBytes(DotNetEnv.Env.GetString("KEY"));
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x =>
-{
-    x.TokenValidationParameters = new TokenValidationParameters 
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidateAudience = true
-    };
-});
-
-builder.Services.AddAuthorization();
-
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// Configure the HTTP request pipeline.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -84,8 +53,33 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
+builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<AuthServices>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddTransient<IUserServices, UserServices>();
+builder.Services.AddTransient<IAuthServices, AuthServices>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+var key = Encoding.ASCII.GetBytes(DotNetEnv.Env.GetString("KEY"));
+
+builder.Services.AddAuthentication(x => {
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x => {
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

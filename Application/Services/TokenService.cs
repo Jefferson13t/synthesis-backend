@@ -11,11 +11,13 @@ namespace Synthesis.Services
         public static object GenerateToken(User user)
         {
             var key = Encoding.ASCII.GetBytes(DotNetEnv.Env.GetString("KEY"));
-                var tokenConfig = new SecurityTokenDescriptor
+            var tokenConfig = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] 
                 {
-                    new Claim("userId", user.Id)
+                    new Claim("userId", user.Id),
+                    new Claim("userName", user.Name),
+                    new Claim("userEmail", user.Email),
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

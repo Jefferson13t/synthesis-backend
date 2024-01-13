@@ -9,5 +9,10 @@ namespace Synthesis.Domain.DTOs
         public string Id { get; set; }
         public string Name { get; set;}
         public string Email { get; set;}
+        public UserDTO(string Id, string Name, string Email){
+            this.Id = Id;
+            this.Name = Name;
+            this.Email = Email;
+        }
     }
 }

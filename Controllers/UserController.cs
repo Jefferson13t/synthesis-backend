@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Synthesis.Model;
 using Microsoft.AspNetCore.Authorization;
 using Synthesis.ViewModel;
+using Synthesis.Domain.DTOs;
 using Synthesis.Services;
 
 namespace Synthesis.Controllers{
@@ -21,6 +22,13 @@ namespace Synthesis.Controllers{
             } catch (ArgumentException ex){
                 return BadRequest(ex.Message);
             }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Get(){
+            List<UserDTO> userList = _userServices.Get();
+            return Ok(userList);
         }
     }
 }
