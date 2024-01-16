@@ -13,7 +13,7 @@ namespace Synthesis.Services
         public object Login(string Email, string Password){
 
             try{
-                User userFound = _userRepository.Get(Email);
+                User userFound = _userRepository.GetByEmail(Email);
                 bool passwordsMatch = Verify(Password, userFound.Password);
                 if(!passwordsMatch){
                     throw new ArgumentException("Senha incorreta");

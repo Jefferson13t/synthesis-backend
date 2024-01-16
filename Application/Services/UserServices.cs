@@ -4,7 +4,6 @@ using static BCrypt.Net.BCrypt;
 using Microsoft.AspNetCore.Authorization;
 using Synthesis.Domain.DTOs;
 
-
 namespace Synthesis.Services
 
 {
@@ -15,7 +14,7 @@ namespace Synthesis.Services
         }
         public User CreateUser(string Name, string Email, string Password){
 
-            User userFound = _userRepository.Get(Email);
+            User userFound = _userRepository.GetByEmail(Email);
 
             if(userFound != null){
                 throw new ArgumentException("Email já cadastrado.");

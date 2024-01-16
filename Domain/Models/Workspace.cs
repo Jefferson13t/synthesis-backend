@@ -1,20 +1,16 @@
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 
 namespace Synthesis.Model 
 {
-    public class User{
+    public class Workspace{
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
 
-        public User(string Name, string Email, string Password){
+        public Workspace(string Name){
             this.Name = Name;
-            this.Email = Email;
-            this.Password = Password;
         }
     }
 }

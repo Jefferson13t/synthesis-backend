@@ -5,6 +5,7 @@ namespace Synthesis.Model
     public interface IUserRepository{
         void Add(User user);
         List<UserDTO> Get();
-        User Get(string email);
+        User GetByEmail(string Email);
+        User GetById(string Id);
     }
 }

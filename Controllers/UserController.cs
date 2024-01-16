@@ -7,7 +7,7 @@ using Synthesis.Services;
 
 namespace Synthesis.Controllers{
     [ApiController]
-    [Route("api/v1/user")]
+    [Route("user")]
     public class UserController : ControllerBase {
         private readonly UserServices _userServices;
         public UserController(UserServices userServices) {
@@ -24,7 +24,7 @@ namespace Synthesis.Controllers{
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult Get(){
             List<UserDTO> userList = _userServices.Get();

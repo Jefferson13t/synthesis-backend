@@ -10,12 +10,13 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Synthesis.Model;
 
-var builder = WebApplication.CreateBuilder(args);
 
 var pack = new ConventionPack { new CamelCaseElementNameConvention() };
 ConventionRegistry.Register("elementNameConvention", pack, x => true);
 
 DotNetEnv.Env.Load();
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -23,7 +24,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -54,11 +54,22 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddScoped<UserServices>();
-builder.Services.AddScoped<AuthServices>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddTransient<IUserServices, UserServices>();
-builder.Services.AddTransient<IAuthServices, AuthServices>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<AuthServices>();
+builder.Services.AddTransient<IAuthServices, AuthServices>();
+
+builder.Services.AddScoped<WorkspaceServices>();
+builder.Services.AddScoped<WorkspaceRepository>();
+builder.Services.AddTransient<IWorkspaceServices, WorkspaceServices>();
+builder.Services.AddTransient<IWorkspaceRepository, WorkspaceRepository>();
+
+builder.Services.AddScoped<MemberServices>();
+builder.Services.AddScoped<MemberRepository>();
+builder.Services.AddTransient<IMemberServices, MemberServices>();
+builder.Services.AddTransient<IMemberRepository, MemberRepository>();
 
 var key = Encoding.ASCII.GetBytes(DotNetEnv.Env.GetString("KEY"));
 
@@ -75,7 +86,6 @@ builder.Services.AddAuthentication(x => {
         ValidateAudience = false
     };
 });
-
 
 var app = builder.Build();
 
