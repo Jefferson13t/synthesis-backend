@@ -22,11 +22,14 @@ namespace  Synthesis.Repository
             List<UserDTO> result = _userCollection.Find(filter).Project<UserDTO>(projection).ToList();
             return result;
         }
-        public User Get(string email){
-            User userFound = _userCollection.Find(x => x.Email == email).FirstOrDefault();
-            if(userFound == null){
-                throw new ArgumentException("Usuario não encontrado.");
-            }
+        public User GetByEmail(string Email){
+            
+            User userFound = _userCollection.Find(x => x.Email == Email).FirstOrDefault();
+            return userFound;
+        }
+        public User GetById(string Id){
+            
+            User userFound = _userCollection.Find(x => x.Id == Id).FirstOrDefault();
             return userFound;
         }
     }
