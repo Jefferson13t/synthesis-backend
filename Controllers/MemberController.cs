@@ -11,7 +11,7 @@ namespace Synthesis.Controllers{
     public class MemberController : ControllerBase {
         private readonly MemberServices _memberServices;
         public MemberController(MemberServices memberServices) {
-            _memberServices = memberServices;
+            _memberServices = memberServices ?? throw new ArgumentNullException(nameof(memberServices));
         }
 
         [HttpPost]

@@ -11,10 +11,9 @@ namespace Synthesis.Services
         private readonly IWorkspaceRepository _workspaceRepository;
 
         public MemberServices(IMemberRepository memberRepository, IUserRepository userRepository, IWorkspaceRepository workspaceRepository){
-            _memberRepository = memberRepository;
-            _userRepository = userRepository;
-            _workspaceRepository = workspaceRepository;
-
+            _memberRepository = memberRepository ?? throw new ArgumentNullException(nameof(memberRepository));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _workspaceRepository = workspaceRepository ?? throw new ArgumentNullException(nameof(workspaceRepository));
         }
         public Member CreateMember(string UserId, string WorkspaceId, Role Role){
 

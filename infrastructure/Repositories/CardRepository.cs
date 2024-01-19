@@ -18,9 +18,10 @@ namespace  Synthesis.Repository
         }
         public List<CardDTO> Get() {
             FilterDefinition<Card> filter = Builders<Card>.Filter.Empty;
-            var projection = Builders<Card>.Projection.Include("id").Include("name").Include("email");
+            var projection = Builders<Card>.Projection.Include("id").Include("columnId").Include("title").Include("description").Include("date").Include("index");
             List<CardDTO> result = _cardCollection.Find(filter).Project<CardDTO>(projection).ToList();
             return result;
         }
     }
 }
+

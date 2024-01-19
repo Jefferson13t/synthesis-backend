@@ -12,9 +12,10 @@ namespace Synthesis.Services
         private readonly IUserRepository _userRepository;
 
         public WorkspaceServices(IWorkspaceRepository workspaceRepository, MemberServices memberServices, IUserRepository userRepository){
-            _workspaceRepository = workspaceRepository;
-            _memberServices = memberServices;
-            _userRepository = userRepository;
+            _workspaceRepository = workspaceRepository ?? throw new ArgumentNullException(nameof(workspaceRepository));
+            _memberServices = memberServices ?? throw new ArgumentNullException(nameof(memberServices));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+
         }
         public Workspace CreateWorkspace(string Name, string UserId){
 

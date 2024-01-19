@@ -32,5 +32,21 @@ namespace  Synthesis.Repository
             User userFound = _userCollection.Find(x => x.Id == Id).FirstOrDefault();
             return userFound;
         }
+
+        public void Update(User userUpdated){
+
+            var filter = Builders<User>.Filter.Eq(x => x.Id, userUpdated.Id);
+            var update = Builders<User>.Update
+                .Set(x => x.Name, userUpdated.Name)
+                .Set(x => x.Email, userUpdated.Email)
+                .Set(x => x.Password, userUpdated.Password);
+
+            _userCollection.UpdateOne(filter, update);    
+        }
+
+        public void Delete(string Id){
+            var filter = Builders<User>.Filter.Eq(x => x.Id, Id);
+            _userCollection.DeleteOneAsync(filter);    
+        }
     }
 }

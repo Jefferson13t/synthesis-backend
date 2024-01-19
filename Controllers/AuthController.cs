@@ -12,7 +12,7 @@ namespace Synthesis.Controllers
 
         private readonly IAuthServices _AuthServices;
         public AuthController(IAuthServices authServices) {
-            _AuthServices = authServices;
+            _AuthServices = authServices ?? throw new ArgumentNullException(nameof(authServices));
         }
 
         [HttpPost]

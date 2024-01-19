@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Synthesis.Model;
 
-
 var pack = new ConventionPack { new CamelCaseElementNameConvention() };
 ConventionRegistry.Register("elementNameConvention", pack, x => true);
 
@@ -65,6 +64,16 @@ builder.Services.AddScoped<WorkspaceServices>();
 builder.Services.AddScoped<WorkspaceRepository>();
 builder.Services.AddTransient<IWorkspaceServices, WorkspaceServices>();
 builder.Services.AddTransient<IWorkspaceRepository, WorkspaceRepository>();
+
+builder.Services.AddScoped<ColumnServices>();
+builder.Services.AddScoped<ColumnRepository>();
+builder.Services.AddTransient<IColumnServices, ColumnServices>();
+builder.Services.AddTransient<IColumnRepository, ColumnRepository>();
+
+builder.Services.AddScoped<CardServices>();
+builder.Services.AddScoped<CardRepository>();
+builder.Services.AddTransient<ICardServices, CardServices>();
+builder.Services.AddTransient<ICardRepository, CardRepository>();
 
 builder.Services.AddScoped<MemberServices>();
 builder.Services.AddScoped<MemberRepository>();

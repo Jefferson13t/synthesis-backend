@@ -11,7 +11,7 @@ namespace Synthesis.Controllers{
     public class WorkspaceController : ControllerBase {
         private readonly WorkspaceServices _workspaceServices;
         public WorkspaceController(WorkspaceServices workspaceServices) {
-            _workspaceServices = workspaceServices;
+            _workspaceServices = workspaceServices ?? throw new ArgumentNullException(nameof(workspaceServices));
         }
 
         //[Authorize]

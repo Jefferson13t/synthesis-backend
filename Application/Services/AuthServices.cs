@@ -8,7 +8,7 @@ namespace Synthesis.Services
     public class AuthServices : IAuthServices {
         private readonly IUserRepository _userRepository;
         public AuthServices(IUserRepository userRepository){
-            _userRepository = userRepository;
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
         public object Login(string Email, string Password){
 

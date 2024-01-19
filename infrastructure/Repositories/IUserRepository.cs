@@ -7,5 +7,7 @@ namespace Synthesis.Model
         List<UserDTO> Get();
         User GetByEmail(string Email);
         User GetById(string Id);
+        void Update(User user);
+        void Delete(string Id);
     }
 }
