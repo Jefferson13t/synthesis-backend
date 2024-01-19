@@ -30,5 +30,18 @@ namespace Synthesis.Controllers{
             List<ColumnDTO> columnList = _columnServices.Get();
             return Ok(columnList);
         }
+
+        //[Authorize]
+        [HttpPut]
+        public IActionResult Update(string id, ColumnViewModel columnView){
+            Column column = _columnServices.UpdateColumn(id, columnView.WorkspaceId, columnView.Title, columnView.Index);
+            return Ok(column);
+        }
+        //[Authorize]
+        [HttpDelete]
+        public IActionResult Delete(string id){
+            Column column = _columnServices.DeleteColumn(id);
+            return Ok(column);
+        }
     }
 }

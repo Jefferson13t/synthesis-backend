@@ -17,6 +17,7 @@ namespace Synthesis.Services
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
 
         }
+
         public Workspace CreateWorkspace(string Name, string UserId){
 
             if(!ObjectId.TryParse(UserId, out _)){
@@ -29,14 +30,39 @@ namespace Synthesis.Services
                 throw new ArgumentException("Usuario não encontrado.");
             }
 
+
             Workspace newWorkspace = new Workspace(Name);
             _workspaceRepository.Add(newWorkspace);
             _memberServices.CreateMember(UserId, newWorkspace.Id, Role.Admin);
 
             return newWorkspace;
         } 
+
         public List<WorkspaceDTO> Get(){
             return _workspaceRepository.Get();
+        }
+
+        public Workspace UpdateWorkspace(string Id, string Name) {
+
+            Workspace workspaceFound = _workspaceRepository.GetById(Id);
+            if(workspaceFound == null){
+                throw new ArgumentException("Workspace não encontrado.");
+            }
+
+            workspaceFound.Name = Name;
+
+            _workspaceRepository.Update(workspaceFound);
+            return workspaceFound;
+        }
+        
+        public Workspace DeleteWorkspace(string Id) {
+
+            Workspace workspaceFound = _workspaceRepository.GetById(Id);
+            if(workspaceFound == null){
+                throw new ArgumentException("Workspace não encontrado.");
+            }
+            _workspaceRepository.Delete(Id);
+            return workspaceFound;
         }
     }
 }

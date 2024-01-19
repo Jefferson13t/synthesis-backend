@@ -31,5 +31,17 @@ namespace Synthesis.Controllers{
             List<WorkspaceDTO> workspaceList = _workspaceServices.Get();
             return Ok(workspaceList);
         }
+        //[Authorize]
+        [HttpPut]
+        public IActionResult Update(string id, WorkspaceViewModel workspaceView){
+            Workspace workspace = _workspaceServices.UpdateWorkspace(id, workspaceView.Name);
+            return Ok(workspace);
+        }
+        //[Authorize]
+        [HttpDelete]
+        public IActionResult Delete(string id){
+            Workspace workspace = _workspaceServices.DeleteWorkspace(id);
+            return Ok(workspace);
+        }
     }
 }

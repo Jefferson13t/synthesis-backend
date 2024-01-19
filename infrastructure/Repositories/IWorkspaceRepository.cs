@@ -5,6 +5,8 @@ namespace Synthesis.Model
     public interface IWorkspaceRepository{
         void Add(Workspace Workspace);
         List<WorkspaceDTO> Get();
-        Workspace Get(string workspaceId);
+        Workspace GetById(string workspaceId);
+        void Update(Workspace workspace);
+        void Delete(string workspaceId);
     }
 }

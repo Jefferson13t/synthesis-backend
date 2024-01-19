@@ -25,9 +25,42 @@ namespace Synthesis.Services
             _cardRepository.Add(newCard);
             return newCard;
         } 
+        
         public List<CardDTO> Get(){
             return _cardRepository.Get();
         }
 
+        public Card UpdateCard(string Id, string ColumnId, string Title, string Description, DateTime Date, int Index) {
+
+            Card cardFound = _cardRepository.GetById(Id);
+            if(cardFound == null){
+                throw new ArgumentException("Card não encontrado.");
+            }
+
+            Column columnFound = _columnRepository.GetById(ColumnId);
+
+            if(columnFound == null){
+                throw new ArgumentException("Coluna não encontrada.");
+            }
+
+            cardFound.ColumnId = ColumnId;
+            cardFound.Title = Title;
+            cardFound.Description = Description;
+            cardFound.Date = Date;
+            cardFound.Index = Index;
+
+            _cardRepository.Update(cardFound);
+            return cardFound;
+        }
+        
+        public Card DeleteCard(string Id) {
+
+            Card cardFound = _cardRepository.GetById(Id);
+            if(cardFound == null){
+                throw new ArgumentException("Card não encontrado.");
+            }
+            _cardRepository.Delete(Id);
+            return cardFound;
+        }
     }
 }

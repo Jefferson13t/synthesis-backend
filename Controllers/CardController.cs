@@ -30,5 +30,18 @@ namespace Synthesis.Controllers{
             List<CardDTO> cardList = _cardServices.Get();
             return Ok(cardList);
         }
+
+        //[Authorize]
+        [HttpPut]
+        public IActionResult Update(string id, CardViewModel cardView){
+            Card card = _cardServices.UpdateCard(id, cardView.ColumnId, cardView.Title, cardView.Description, cardView.Date, cardView.Index);
+            return Ok(card);
+        }
+        //[Authorize]
+        [HttpDelete]
+        public IActionResult Delete(string id){
+            Card card = _cardServices.DeleteCard(id);
+            return Ok(card);
+        }
     }
 }

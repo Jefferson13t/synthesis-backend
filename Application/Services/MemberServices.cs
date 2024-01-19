@@ -23,7 +23,7 @@ namespace Synthesis.Services
                 throw new ArgumentException("Usuario não encontrado.");
             }
 
-            Workspace workspaceFound = _workspaceRepository.Get(WorkspaceId);
+            Workspace workspaceFound = _workspaceRepository.GetById(WorkspaceId);
 
             if(workspaceFound == null){
                 throw new ArgumentException("Workspace não encontrado");

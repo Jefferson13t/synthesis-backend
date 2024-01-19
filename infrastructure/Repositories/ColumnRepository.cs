@@ -27,5 +27,21 @@ namespace  Synthesis.Repository
             Column columnFound = _columnCollection.Find(x => x.Id == Id).FirstOrDefault();
             return columnFound;
         }
+        public void Update(Column columnUpdated){
+
+            var filter = Builders<Column>.Filter.Eq(x => x.Id, columnUpdated.Id);
+            var update = Builders<Column>.Update
+                .Set(x => x.WorkspaceId, columnUpdated.WorkspaceId)
+                .Set(x => x.Title, columnUpdated.Title)
+                .Set(x => x.Index, columnUpdated.Index);
+
+
+            _columnCollection.UpdateOne(filter, update);    
+        }
+
+        public void Delete(string Id){
+            var filter = Builders<Column>.Filter.Eq(x => x.Id, Id);
+            _columnCollection.DeleteOneAsync(filter);    
+        }
     }
 }
