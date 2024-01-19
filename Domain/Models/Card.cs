@@ -13,7 +13,6 @@ namespace Synthesis.Model
         public DateTime Date { get; set; }
         public int Index { get; set; }
 
-
         public Card(string ColumnId, string Title, string Description, DateTime Date, int Index){
             this.ColumnId = ColumnId;
             this.Title = Title;

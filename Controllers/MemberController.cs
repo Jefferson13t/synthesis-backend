@@ -30,5 +30,27 @@ namespace Synthesis.Controllers{
             List<MemberDTO> memberList = _memberServices.Get();
             return Ok(memberList);
         }
+
+        //[Authorize]
+        [HttpPut]
+        public IActionResult Update(string id, MemberViewModel memberView){
+            try{
+                Member member = _memberServices.UpdateMember(id, memberView.UserId, memberView.WorkspaceId, memberView.Role);
+                return Ok(member);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        //[Authorize]
+        [HttpDelete]
+        public IActionResult Delete(string id){
+            try{
+                Member member = _memberServices.DeleteMember(id);
+                return Ok(member);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

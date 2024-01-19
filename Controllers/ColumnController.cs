@@ -34,14 +34,22 @@ namespace Synthesis.Controllers{
         //[Authorize]
         [HttpPut]
         public IActionResult Update(string id, ColumnViewModel columnView){
-            Column column = _columnServices.UpdateColumn(id, columnView.WorkspaceId, columnView.Title, columnView.Index);
-            return Ok(column);
+            try{
+                Column column = _columnServices.UpdateColumn(id, columnView.WorkspaceId, columnView.Title, columnView.Index);
+                return Ok(column);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
         //[Authorize]
         [HttpDelete]
         public IActionResult Delete(string id){
-            Column column = _columnServices.DeleteColumn(id);
-            return Ok(column);
+            try{
+                Column column = _columnServices.DeleteColumn(id);
+                return Ok(column);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

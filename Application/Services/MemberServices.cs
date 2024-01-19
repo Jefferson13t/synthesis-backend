@@ -15,6 +15,7 @@ namespace Synthesis.Services
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
             _workspaceRepository = workspaceRepository ?? throw new ArgumentNullException(nameof(workspaceRepository));
         }
+
         public Member CreateMember(string UserId, string WorkspaceId, Role Role){
 
             User userFound = _userRepository.GetById(UserId);
@@ -33,8 +34,34 @@ namespace Synthesis.Services
             _memberRepository.Add(newMember);
             return newMember;
         } 
+
         public List<MemberDTO> Get(){
             return _memberRepository.Get();
+        }
+
+        public Member UpdateMember(string Id, string UserId, string WorkspaceId, Role Role) {
+
+            Member memberFound = _memberRepository.GetById(Id);
+            if(memberFound == null){
+                throw new ArgumentException("Member não encontrado.");
+            }
+
+            memberFound.UserId = UserId;
+            memberFound.WorkspaceId = WorkspaceId;
+            memberFound.Role = Role;
+
+            _memberRepository.Update(memberFound);
+            return memberFound;
+        }
+        
+        public Member DeleteMember(string Id) {
+
+            Member memberFound = _memberRepository.GetById(Id);
+            if(memberFound == null){
+                throw new ArgumentException("Member não encontrado.");
+            }
+            _memberRepository.Delete(Id);
+            return memberFound;
         }
 
     }

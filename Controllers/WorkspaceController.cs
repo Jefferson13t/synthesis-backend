@@ -34,14 +34,22 @@ namespace Synthesis.Controllers{
         //[Authorize]
         [HttpPut]
         public IActionResult Update(string id, WorkspaceViewModel workspaceView){
-            Workspace workspace = _workspaceServices.UpdateWorkspace(id, workspaceView.Name);
-            return Ok(workspace);
+            try{
+                Workspace workspace = _workspaceServices.UpdateWorkspace(id, workspaceView.Name);
+                return Ok(workspace);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
         //[Authorize]
         [HttpDelete]
         public IActionResult Delete(string id){
-            Workspace workspace = _workspaceServices.DeleteWorkspace(id);
-            return Ok(workspace);
+            try{
+                Workspace workspace = _workspaceServices.DeleteWorkspace(id);
+                return Ok(workspace);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

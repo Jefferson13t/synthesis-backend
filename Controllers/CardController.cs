@@ -34,14 +34,22 @@ namespace Synthesis.Controllers{
         //[Authorize]
         [HttpPut]
         public IActionResult Update(string id, CardViewModel cardView){
-            Card card = _cardServices.UpdateCard(id, cardView.ColumnId, cardView.Title, cardView.Description, cardView.Date, cardView.Index);
-            return Ok(card);
+            try{
+                Card card = _cardServices.UpdateCard(id, cardView.ColumnId, cardView.Title, cardView.Description, cardView.Date, cardView.Index);
+                return Ok(card);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
         //[Authorize]
         [HttpDelete]
         public IActionResult Delete(string id){
-            Card card = _cardServices.DeleteCard(id);
-            return Ok(card);
+            try{
+                Card card = _cardServices.DeleteCard(id);
+                return Ok(card);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

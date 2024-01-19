@@ -34,14 +34,23 @@ namespace Synthesis.Controllers{
         //[Authorize]
         [HttpPut]
         public IActionResult Update(string id, UserViewModel userView){
-            User user =  _userServices.UpdateUser(id, userView.Name, userView.Email, userView.Password);
-            return Ok(user);
+            try{
+                User user =  _userServices.UpdateUser(id, userView.Name, userView.Email, userView.Password);
+                return Ok(user);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
+
         }
         //[Authorize]
         [HttpDelete]
         public IActionResult Delete(string id){
-            User user = _userServices.DeleteUser(id);
-            return Ok(user);
+            try{
+                User user = _userServices.DeleteUser(id);
+                return Ok(user);
+            } catch (ArgumentException ex){
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
