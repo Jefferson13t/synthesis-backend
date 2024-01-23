@@ -1,6 +1,6 @@
 @Synthesis_HostAddress = http://localhost:5024
 
-GET {{Synthesis_HostAddress}}/weatherforecast/
+GET {{Synthesis_HostAddress}}/
 Accept: application/json
 
 ###

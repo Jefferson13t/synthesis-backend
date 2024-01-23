@@ -38,7 +38,6 @@ namespace Synthesis.Services
             }
 
             Column columnFound = _columnRepository.GetById(ColumnId);
-
             if(columnFound == null){
                 throw new ArgumentException("Coluna não encontrada.");
             }

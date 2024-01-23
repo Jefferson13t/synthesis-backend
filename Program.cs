@@ -82,6 +82,16 @@ builder.Services.AddScoped<CardRepository>();
 builder.Services.AddTransient<ICardServices, CardServices>();
 builder.Services.AddTransient<ICardRepository, CardRepository>();
 
+builder.Services.AddScoped<FlagServices>();
+builder.Services.AddScoped<FlagRepository>();
+builder.Services.AddTransient<IFlagServices, FlagServices>();
+builder.Services.AddTransient<IFlagRepository, FlagRepository>();
+
+builder.Services.AddScoped<FlagCardAssociationServices>();
+builder.Services.AddScoped<FlagCardAssociationRepository>();
+builder.Services.AddTransient<IFlagCardAssociationServices, FlagCardAssociationServices>();
+builder.Services.AddTransient<IFlagCardAssociationRepository, FlagCardAssociationRepository>();
+
 builder.Services.AddScoped<MemberServices>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddTransient<IMemberServices, MemberServices>();
